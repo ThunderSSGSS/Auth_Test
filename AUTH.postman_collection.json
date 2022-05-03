@@ -1,0 +1,306 @@
+{
+	"info": {
+		"_postman_id": "31f29d30-83a5-4771-ad5e-94d58a1c7aee",
+		"name": "AUTH",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth_api",
+			"item": [
+				{
+					"name": "Authenticate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"ojamesartur@gmail.com\",\r\n    \"password\":\"Original1\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/authenticate/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"authenticate",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refresh\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNWIzNjQ5MC01NDA1LTRiOGItYTQ2Ni1hNmExM2I5ZmQ1YWQifQ.P8ixpecg7qk5iyxWXC4V9rE8u4VRpVRE6XmtgSvNPOM\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/refresh/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"refresh",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignUP",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"ojamesartur@gmail.com\",\r\n    \"password\":\"Original#\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/signup/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"signup",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Complete signup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"last_password\":\"Original#\",\r\n    \"password\":\"Original1\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/complete_signup/f9eb769b-3b5d-4732-b446-b69de70f91eb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"complete_signup",
+								"f9eb769b-3b5d-4732-b446-b69de70f91eb"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth_admin_api",
+			"item": [
+				{
+					"name": "List Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NGI2MmY2Yy0yMzk4LTQyZWQtYmI1OC05ZDA4NzNiZDI2NWUifQ.6YyZaWVp7u9BE_7afAG5lPCw8q6tjpv2mOsvP32r8nQ",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/admin/users/?skip=0&limit=100",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"admin",
+								"users",
+								""
+							],
+							"query": [
+								{
+									"key": "skip",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzZDVkNTgwOC0wN2M2LTQ5MjktYjVkNy02OGQ4NTgzNmU4ZGEifQ.AF-hAMd_J9ZAUIR8V1p_I4J35ErlrmO4hmvMjFppBRU",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/admin/users/ed635ca9-65c9-4100-ab83-62359aab1340",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"admin",
+								"users",
+								"ed635ca9-65c9-4100-ab83-62359aab1340"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhODIwYjI2YS1jNDgzLTQ5ZDQtOWNiMy02ZjNiYzAxYTU4M2UifQ.yk8SJ7W73s44nLOLsXfxHcLceRAJTkF5VLZPGu0nrtI",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"0124ss3dd3@gmail.com\",\r\n    \"password\":\"Original#\",\r\n    \"is_staff\":false,\r\n    \"is_active\":false\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/admin/users/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"admin",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwOTk4Yjg5Ny00ZGFiLTRlMGYtOTAzNC0zYmExMTJjZjJiNmQifQ.DRN6RNDkPqA4DgNliIAY4QOj0PQG2wDI7ljXn68UJto",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_active\":true,\r\n    \"is_staff\":true,\r\n    \"email\":\"mano@gmail.com\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/admin/users/06af69b5-2853-4619-97e9-b7308b3703a2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"admin",
+								"users",
+								"06af69b5-2853-4619-97e9-b7308b3703a2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4YTVjZTFjOS0zMmYyLTRhOWYtOGVmYi1mMDJmYzljNGJmMTMifQ.Gl4ClUOAdIe0aLcGeMaKwbxMHXUQSadsfjcDccrHYWs",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8000/admin/users/06af69b5-2853-4619-97e9-b7308b3703a2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"admin",
+								"users",
+								"06af69b5-2853-4619-97e9-b7308b3703a2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

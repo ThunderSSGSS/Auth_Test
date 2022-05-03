@@ -1,0 +1,166 @@
+version: "3"
+services:
+  
+  #################____API_GATEWAY_(NGINX)___#################
+  nginx:
+    image: nginx:1.21.6-alpine
+    container_name: nginx
+    volumes:
+      - ./NGINX/conf:/etc/nginx/conf.d
+      - ./NGINX/log:/var/log/nginx
+    ports:
+      - 8000:80
+    depends_on:
+      - auth_api
+      - auth_admin_api
+
+  #################____Filebeat_Log___#################
+  filebeat_log:
+    #image: filebeat_log_reader
+    build: ./Dockerfiles/Filebeat
+    container_name: filebeat_log
+    environment:
+      LOGSTASH_HOST_IP: ${LOGSTASH_HOST_IP}
+    volumes:
+      - ./FILEBEAT_LOG/conf:/filebeat_data/conf
+      - ./FILEBEAT_LOG/data:/usr/share/filebeat/data
+      - ./NGINX/log:/filebeat_data/log
+
+      
+  #################____CACHE___#################
+  cache:
+    image: redis:7.0-rc-alpine
+    container_name: cache
+
+  #################____DATABASE___#################
+  auth_db_server:
+    image: postgres:14.2-alpine
+    container_name: auth_db_server
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+
+
+  #################____BROKER___#################
+  broker:
+    #image: rabbitmq_teste
+    build: ./Dockerfiles/Rabbitmq
+    container_name: broker
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    ports:
+      - 15672:15672
+
+
+  #################____EMAIL_WORKER___############
+  email_worker:
+    #image: celery_run
+    build: ./Dockerfiles/Celery
+    container_name: email_worker
+    environment:
+      RABBITMQ_USER: ${RABBITMQ_USER}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+      RABBITMQ_IP: ${RABBITMQ_SERVER}
+      RABBITMQ_VHOST: ${RABBITMQ_VHOST}
+      WORKER_DEFAULT_QUEUE: ${EMAILS_QUEUE}
+      CACHE_SERVER: ${CACHE_SERVER}
+      CACHE_PORT: ${CACHE_PORT}
+
+      SENDER_GMAIL: ${SENDER_GMAIL}
+      SENDER_GMAIL_PASSWORD: ${SENDER_GMAIL_PASSWORD}
+    volumes:
+      - ./EMAIL_WORKER/email_worker:/code
+    command: ["celery","-A","app.celery", "worker","--loglevel=INFO"]
+    depends_on:
+      - ${RABBITMQ_SERVER}
+      - ${CACHE_SERVER}
+
+
+  #################____Auth_DB_WORKER___##################
+  auth_db_worker:
+    #image: celery_sql_run
+    build: ./Dockerfiles/Celery_with_sql
+    container_name: auth_db_worker
+    environment:
+      RABBITMQ_USER: ${RABBITMQ_USER}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+      RABBITMQ_IP: ${RABBITMQ_SERVER}
+      RABBITMQ_VHOST: ${RABBITMQ_VHOST}
+      WORKER_DEFAULT_QUEUE: ${AUTH_DB_TRANSACTIONS_QUEUE}
+      
+      CACHE_SERVER: ${CACHE_SERVER}
+      CACHE_PORT: ${CACHE_PORT}
+      
+      DATABASE_USER: ${DB_USER}
+      DATABASE_PASSWORD: ${DB_PASSWORD}
+      DATABASE_SERVER: ${DB_SERVER}
+      DATABASE_NAME: ${DB_NAME}
+    volumes:
+      - ./AUTH_DB_WORKER/auth_db_worker:/code
+    command: ["celery","-A","app.celery", "worker","--loglevel=INFO"]
+    depends_on:
+      - ${RABBITMQ_SERVER}
+      - ${CACHE_SERVER}
+
+  #################____AUTH_API___##################
+  auth_api:
+    #image: fastapi_run
+    build: ./Dockerfiles/FastAPI
+    container_name: auth_api
+    environment:
+      DATABASE_USER: ${DB_USER}
+      DATABASE_PASSWORD: ${DB_PASSWORD}
+      DATABASE_SERVER: ${DB_SERVER}
+      DATABASE_NAME: ${DB_NAME}
+      
+      CACHE_SERVER: ${CACHE_SERVER}
+      
+      AUTH_SECRET_KEY: ${AUTH_SECRET_KEY}
+      AUTH_ALGORITHM: ${AUTH_ALGORITHM}
+
+      DB_TRANSACTIONS_QUEUE: ${AUTH_DB_TRANSACTIONS_QUEUE}
+      EMAILS_QUEUE: ${EMAILS_QUEUE}
+
+      RABBITMQ_USER: ${RABBITMQ_USER}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+      RABBITMQ_IP: ${RABBITMQ_SERVER}
+      RABBITMQ_VHOST: ${RABBITMQ_VHOST}
+
+      COMPLETE_SIGNUP_LINK: ${COMPLETE_SIGNUP_LINK}
+    volumes:
+      - ./AUTH_API/auth_api:/code
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80", "--reload"]
+    depends_on:
+      - auth_db_worker
+      - ${DB_SERVER}
+      - ${CACHE_SERVER}
+
+
+  ##################___AUTH_ADMIN_API___#########################
+  auth_admin_api:
+    #image: fastapi_run
+    build: ./Dockerfiles/FastAPI
+    container_name: auth_admin_api
+    environment:
+      DATABASE_USER: ${DB_USER}
+      DATABASE_PASSWORD: ${DB_PASSWORD}
+      DATABASE_SERVER: ${DB_SERVER}
+      DATABASE_NAME: ${DB_NAME}
+      
+      CACHE_SERVER: ${CACHE_SERVER}
+      
+      DB_TRANSACTIONS_QUEUE: ${AUTH_DB_TRANSACTIONS_QUEUE}
+      
+      RABBITMQ_USER: ${RABBITMQ_USER}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+      RABBITMQ_IP: ${RABBITMQ_SERVER}
+      RABBITMQ_VHOST: ${RABBITMQ_VHOST}
+    volumes:
+      - ./AUTH_ADMIN_API/auth_admin_api:/code
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80", "--reload"]
+    depends_on:
+      - auth_db_worker
+      - ${DB_SERVER}
+      - ${CACHE_SERVER}
