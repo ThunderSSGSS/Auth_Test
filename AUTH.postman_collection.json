@@ -9,66 +9,6 @@
 			"name": "auth_api",
 			"item": [
 				{
-					"name": "Authenticate",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "default"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"ojamesartur@gmail.com\",\r\n    \"password\":\"Original1\"\r\n}"
-						},
-						"url": {
-							"raw": "http://localhost:8000/authenticate/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"authenticate",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Refresh Token",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "default"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"refresh\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNWIzNjQ5MC01NDA1LTRiOGItYTQ2Ni1hNmExM2I5ZmQ1YWQifQ.P8ixpecg7qk5iyxWXC4V9rE8u4VRpVRE6XmtgSvNPOM\"\r\n}"
-						},
-						"url": {
-							"raw": "http://localhost:8000/refresh/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"refresh",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "SignUP",
 					"request": {
 						"method": "POST",
@@ -81,7 +21,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"ojamesartur@gmail.com\",\r\n    \"password\":\"Original#\"\r\n}"
+							"raw": "{\r\n    \"email\":\"example@gmail.com\",\r\n    \"password\":\"example#\"\r\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8000/signup/",
@@ -111,10 +51,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"last_password\":\"Original#\",\r\n    \"password\":\"Original1\"\r\n}"
+							"raw": "{\r\n    \"last_password\":\"example#\",\r\n    \"password\":\"example1\"\r\n}"
 						},
 						"url": {
-							"raw": "http://localhost:8000/complete_signup/f9eb769b-3b5d-4732-b446-b69de70f91eb",
+							"raw": "http://localhost:8000/complete_signup/d5e08360-4e47-4b2e-82c3-4f2a4437a8f7",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -122,7 +62,67 @@
 							"port": "8000",
 							"path": [
 								"complete_signup",
-								"f9eb769b-3b5d-4732-b446-b69de70f91eb"
+								"d5e08360-4e47-4b2e-82c3-4f2a4437a8f7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"example@gmail.com\",\r\n    \"password\":\"example1\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/authenticate/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"authenticate",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refresh\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmODJiODM2Ny05YzNlLTQ5NWYtODY5OS04NGUyYzk3Nzc3ODkifQ.IyrEbkbI6kkB92iMT2J0hIySvybG0uW9wPHv0ys3AHo\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/refresh/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"refresh",
+								""
 							]
 						}
 					},
@@ -140,7 +140,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NGI2MmY2Yy0yMzk4LTQyZWQtYmI1OC05ZDA4NzNiZDI2NWUifQ.6YyZaWVp7u9BE_7afAG5lPCw8q6tjpv2mOsvP32r8nQ",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlYjExZjQ2Yy05NGU1LTRkYmYtOTIxMy01YjliZWQyOWRlZjIifQ.PwQcxjzdPWmmHlizDNXbb1YGaASm4zK1eJdxielpw8s",
 								"type": "default"
 							}
 						],
