@@ -73,8 +73,8 @@ and previleges for all microservices.
 
 ### Images
 I anexed two (2) images files in this project: 
--"Infra.png", that show the infrastruture of this project and how the containers are connected.
--"Infra_if_we_add_elasticsearch.png", shows other infrastruture, that you can use if you want store data in a elasticsearch
+- "Infra.png", that show the infrastruture of this project and how the containers are connected.
+- "Infra_if_we_add_elasticsearch.png", shows other infrastruture, that you can use if you want store data in a elasticsearch
 cluster to fast data search, using the database to backup only.
 
 ### Others_files
