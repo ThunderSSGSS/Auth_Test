@@ -3,16 +3,16 @@ Sorry about my english.
 # OVERVIEW
 This project is used to authenticate users and manage them.
 
-## This project uses
--Event driven arquitecture;
--Docker, to run all microservices NB: You can use K8s;
--Rabbitmq (broker), used to manage queues;
--Celery, used to process tasks asyncronously;
--Redis, to make cache;
--Nginx, to make an api gateway;
--Postgres, used to store data;
--FastAPI, to building APIs;
--python, with assyncronous programing.
+## This project uses:
+- Event driven arquitecture;
+- Docker, to run all microservices NB: You can use K8s;
+- Rabbitmq (broker), used to manage queues;
+- Celery, used to process tasks asyncronously;
+- Redis, to make cache;
+- Nginx, to make an api gateway;
+- Postgres, used to store data;
+- FastAPI, to building APIs;
+- python, with assyncronous programing.
 
 
 ### Why event driven arquitecture?
@@ -73,17 +73,17 @@ and previleges for all microservices.
 
 ### Images
 I anexed two (2) images files in this project: 
-1-"Infra.png", that show the infrastruture of this project and how the containers are connected.
-2-"Infra_if_we_add_elasticsearch.png", shows other infrastruture, that you can use if you want store data in a elasticsearch
+-"Infra.png", that show the infrastruture of this project and how the containers are connected.
+-"Infra_if_we_add_elasticsearch.png", shows other infrastruture, that you can use if you want store data in a elasticsearch
 cluster to fast data search, using the database to backup only.
 
 ### Others_files
 I anexed an postman collection "AUTH.postman_collection.json" to test the API on postman.
 
 ## Dev_Infos
-Name: James R. R. Artur;
-Email: ojamesartur@gmail.com ;
-A DevOps and infraestructure enthusiastic.
+- Name: James R. R. Artur;
+- Email: ojamesartur@gmail.com ;
+- A DevOps and infraestructure enthusiastic.
 
 
 
